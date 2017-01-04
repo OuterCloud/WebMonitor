@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block content %}
+<script type="text/javascript">
+window.onload=function(){
+	geneList();
+}
+function checkAll(){
+	var checkAllButton= document.getElementById("checkAll");
+	if (checkAllButton.getAttribute("aria-pressed") == "true") {
+		$("tbody input[type='checkbox']").each(function(){
+    		this.checked=false;
+    	})
+	}else{
+		$("tbody input[type='checkbox']").each(function(){
+    		this.checked=true;
+    	})
+	}
+}
+function geneList() {
+	$.get("/geneList",function(data,value){
+		for (var i=0;i<data["script_paths"].length;i++)
+		{
+			var script_path = data["script_paths"][i];
+			script_name = script_path.split("\\")[script_path.split("\\").length-1];
+			document.getElementById("tbody").innerHTML += "<tr id='item'>\
+				<td id='checkbox'><input type='checkbox'></td>\
+				<td id='script_path'>"+script_path+"</td>\
+				<td><a id='edit' href='javascript:void' scriptPath='"+script_path+"' onclick='edit()'>编辑</a></td>\
+				<td>尚未检测</td>\
+			</tr>";
+		}
+	});
+}
+function geneSelection() {
+	var selection = []
+	$("tbody input[type='checkbox']").each(function(){
+    	if( this.checked == true ){
+    		var script_path = this.parentNode.nextSibling.nextSibling.innerHTML;
+    		selection.push(script_path);
+    	}
+    })
+    return selection;
+}
+function startTest() {
+	document.getElementById("start_check").innerHTML = "检测中……";
+	var selection = geneSelection();
+	var params = {};
+	params["selection"] = selection;
+	$.post("/startTest",params,function(data,value){
+		document.getElementById("start_check").innerHTML = "检测";
+		$("tbody input[type='checkbox']").each(function(){
+	    	if( this.checked == true ){
+	    		this.parentNode.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML = "<a id='check_result' href='javascript:void(0);' resultPath='"+data+"' onclick='result()'>查看结果</a>";
+	    	}
+    	})
+	});
+}
+function result(){
+	params = {};
+	var targ = document.getElementById("check_result");
+	//alert(targ.getAttribute("resultPath"))
+	params["result_file_path"] = targ.getAttribute("resultPath");
+    $.post("/result",params,function(data,value){
+    	return true;
+    });
+}
+function edit(){
+	params = {};
+	var targ = document.getElementById("edit");
+	params["script_path"] = targ.getAttribute("scriptPath");
+	$.post("/edit",params,function(data,value){
+		return true;
+	});
+}
+</script>
+<nav class="navbar navbar-default" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="">接口检测平台</a>
+		</div>
+		<div>
+			<ul class="nav navbar-nav">
+				<li><a href="">更新脚本列表</a></li>
+				<li><a id="start_check" href="javascript:void(0);" onclick="startTest()">检测</a></li>
+				<li><a href="javascript:void(0);">检测结果</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th width="10%">
+				<button id="checkAll" type="button" class="btn btn-primary" data-toggle="button" onclick="checkAll()">全选</button>
+			</th>
+			<th width="30%">脚本路径</th>
+			<th width="30%">编辑脚本</th>
+			<th width="30%">运转正常</th>
+		</tr>
+	</thead>
+	<tbody id="tbody">
+	</tbody>
+</table>
+{% endblock%}
