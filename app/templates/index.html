@@ -25,7 +25,6 @@ function selectAll() {
 		this.checked=true;
 	})
 }
-
 function unselectAll() {
 	$("#unselect_all").attr("style","display:none");
 	$("#select_all").attr("style","display:block");
@@ -33,7 +32,6 @@ function unselectAll() {
 		this.checked=false;
 	})
 }
-
 function geneList() {
 	$.get("/geneList",function(data,value){
 		for (var i=0;i<data["script_paths"].length;i++)

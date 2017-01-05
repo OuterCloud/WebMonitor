@@ -14,7 +14,6 @@ def geneList():
 	if request.method == "GET":
 		root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 		scripts_path = os.path.join(root_path,"Auty","scripts","scripts")
-		print scripts_path
 		selection = []
 		for i in os.walk(scripts_path):
 			for fileName in i[2:3][0]:
