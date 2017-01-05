@@ -4,6 +4,8 @@
 window.onload=function(){
 	geneList();
 }
+/**
+全选备用方案1：
 function checkAll(){
 	var checkAllButton= document.getElementById("checkAll");
 	if (checkAllButton.getAttribute("aria-pressed") == "true") {
@@ -15,7 +17,23 @@ function checkAll(){
 			this.checked=true;
 		})
 	}
+}**/
+function selectAll() {
+	$("#select_all").attr("style","display:none");
+	$("#unselect_all").attr("style","display:block");
+	$("tbody input[type='checkbox']").each(function(){
+		this.checked=true;
+	})
 }
+
+function unselectAll() {
+	$("#unselect_all").attr("style","display:none");
+	$("#select_all").attr("style","display:block");
+	$("tbody input[type='checkbox']").each(function(){
+		this.checked=false;
+	})
+}
+
 function geneList() {
 	$.get("/geneList",function(data,value){
 		for (var i=0;i<data["script_paths"].length;i++)
@@ -73,7 +91,7 @@ function edit(evt){
 	});
 }
 </script>
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-inverse" role="navigation">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="">接口检测平台</a>
@@ -90,7 +108,16 @@ function edit(evt){
 	<thead>
 		<tr>
 			<th width="10%">
+				<!--
+				全选备用方案1：
 				<button id="checkAll" type="button" class="btn btn-primary" data-toggle="button" onclick="checkAll()">全选</button>
+				-->
+				<a id="select_all" style="display: block;" href="javascript:void(0);" onclick="selectAll()">
+					<span class="glyphicon glyphicon-ok"></span>
+				</a>
+				<a id="unselect_all" style="display: none;" href="javascript:void(0);" onclick="unselectAll()">
+					<span class="glyphicon glyphicon-remove"></span>
+				</a>
 			</th>
 			<th width="30%">脚本路径</th>
 			<th width="30%">编辑脚本</th>
