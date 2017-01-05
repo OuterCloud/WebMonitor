@@ -8,12 +8,12 @@ function checkAll(){
 	var checkAllButton= document.getElementById("checkAll");
 	if (checkAllButton.getAttribute("aria-pressed") == "true") {
 		$("tbody input[type='checkbox']").each(function(){
-    		this.checked=false;
-    	})
+			this.checked=false;
+		})
 	}else{
 		$("tbody input[type='checkbox']").each(function(){
-    		this.checked=true;
-    	})
+			this.checked=true;
+		})
 	}
 }
 function geneList() {
@@ -34,12 +34,12 @@ function geneList() {
 function geneSelection() {
 	var selection = []
 	$("tbody input[type='checkbox']").each(function(){
-    	if( this.checked == true ){
-    		var script_path = this.parentNode.nextSibling.nextSibling.innerHTML;
-    		selection.push(script_path);
-    	}
-    })
-    return selection;
+		if( this.checked == true ){
+			var script_path = this.parentNode.nextSibling.nextSibling.innerHTML;
+			selection.push(script_path);
+		}
+	})
+	return selection;
 }
 function startTest() {
 	document.getElementById("start_check").innerHTML = "检测中……";
@@ -49,20 +49,20 @@ function startTest() {
 	$.post("/startTest",params,function(data,value){
 		document.getElementById("start_check").innerHTML = "检测";
 		$("tbody input[type='checkbox']").each(function(){
-	    	if( this.checked == true ){
-	    		this.parentNode.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML = "<a id='check_result' href='javascript:void(0);' resultPath='"+data+"' onclick='result(event)'>查看结果</a>";
-	    	}
-    	})
+			if( this.checked == true ){
+				this.parentNode.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML = "<a id='check_result' href='javascript:void(0);' resultPath='"+data+"' onclick='result(event)'>查看结果</a>";
+			}
+		})
 	});
 }
 function result(evt){
 	params = {};
 	var obj = window.event?event.srcElement:evt.target;
-  	//alert(obj.getAttribute("resultPath"))
+	//alert(obj.getAttribute("resultPath"))
 	params["result_file_path"] = obj.getAttribute("resultPath");
-    $.post("/result",params,function(data,value){
-    	return true;
-    });
+	$.post("/result",params,function(data,value){
+		return true;
+	});
 }
 function edit(evt){
 	params = {};
