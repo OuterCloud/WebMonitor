@@ -25,7 +25,7 @@ function geneList() {
 			document.getElementById("tbody").innerHTML += "<tr id='item'>\
 				<td id='checkbox'><input type='checkbox'></td>\
 				<td id='script_path'>"+script_path+"</td>\
-				<td><a id='edit' href='javascript:void' scriptPath='"+script_path+"' onclick='edit()'>编辑</a></td>\
+				<td><a id='edit' href='javascript:void' scriptPath='"+script_path+"' onclick='edit(event)'>编辑</a></td>\
 				<td>尚未检测</td>\
 			</tr>";
 		}
@@ -50,24 +50,24 @@ function startTest() {
 		document.getElementById("start_check").innerHTML = "检测";
 		$("tbody input[type='checkbox']").each(function(){
 	    	if( this.checked == true ){
-	    		this.parentNode.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML = "<a id='check_result' href='javascript:void(0);' resultPath='"+data+"' onclick='result()'>查看结果</a>";
+	    		this.parentNode.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML = "<a id='check_result' href='javascript:void(0);' resultPath='"+data+"' onclick='result(event)'>查看结果</a>";
 	    	}
     	})
 	});
 }
-function result(){
+function result(evt){
 	params = {};
-	var targ = document.getElementById("check_result");
-	//alert(targ.getAttribute("resultPath"))
-	params["result_file_path"] = targ.getAttribute("resultPath");
+	var obj = window.event?event.srcElement:evt.target;
+  	//alert(obj.getAttribute("resultPath"))
+	params["result_file_path"] = obj.getAttribute("resultPath");
     $.post("/result",params,function(data,value){
     	return true;
     });
 }
-function edit(){
+function edit(evt){
 	params = {};
-	var targ = document.getElementById("edit");
-	params["script_path"] = targ.getAttribute("scriptPath");
+	var obj = window.event?event.srcElement:evt.target;
+	params["script_path"] = obj.getAttribute("scriptPath");
 	$.post("/edit",params,function(data,value){
 		return true;
 	});
