@@ -73,7 +73,7 @@ function startTest() {
 			})
 		});
 	}else{
-		alert("请先选择要检测的脚本。");
+		alert("请先选择要检测的脚本，然后再来点我。");
 	}
 }
 function result(evt) {
@@ -143,6 +143,15 @@ function inputMonitor(evt) {
 			<ul class="nav navbar-nav">
 				<li><a href="">更新脚本列表</a></li>
 				<li><a id="start_check" href="javascript:void(0);" onclick="startTest()">检测</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						Auty <b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a target="_blank" href="https://github.com/OuterCloud/Auty.git">Auty下载</a></li>
+						<li><a target="_blank" href="http://www.cnblogs.com/LanTianYou/category/888691.html">Auty系列文档</a></li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -157,22 +166,22 @@ function inputMonitor(evt) {
 	</ol>
 	<!-- Wrapper for slides -->
 	<div class="carousel-inner" role="listbox">
-		<div style="background-color:transparent;" class="item active">
-			<img width="50%" class="center-block" src="{{ url_for('static', filename = 'pictures/code.png') }}" alt="天外归云"/>
-			<div class="carousel-caption">
-				接口检测用例样式
-			</div>
-		</div>
-		<div class="item">
+		<div class="item active">
 			<img width="50%" style="cursor:pointer" onclick="window.open('http://www.cnblogs.com/LanTianYou/p/6250926.html')" class="center-block" src="{{ url_for('static', filename = 'pictures/project.png') }}" alt="天外归云"/>
 			<div class="carousel-caption">
-				WebMonitor项目在本地
+				1.下载WebMonitor到本地
 			</div>
 		</div>
 		<div class="item">
 			<img width="50%" style="cursor:pointer" onclick="window.open('http://www.cnblogs.com/LanTianYou/p/5952472.html')" class="center-block" src="{{ url_for('static', filename = 'pictures/Auty.png') }}" alt="天外归云"/>
 			<div class="carousel-caption">
-				下载Auty到WebMonitor
+				2.下载Auty到WebMonitor
+			</div>
+		</div>
+		<div class="item">
+			<img width="50%" class="center-block" src="{{ url_for('static', filename = 'pictures/code.png') }}" alt="天外归云"/>
+			<div class="carousel-caption">
+				3.接口检测用例编写样式
 			</div>
 		</div>
 	</div>
