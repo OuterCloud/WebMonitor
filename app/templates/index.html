@@ -59,18 +59,22 @@ function geneSelection() {
 	return selection;
 }
 function startTest() {
-	document.getElementById("start_check").innerHTML = "检测中……";
 	var selection = geneSelection();
-	var params = {};
-	params["selection"] = selection;
-	$.post("/startTest",params,function(data,value){
-		document.getElementById("start_check").innerHTML = "检测";
-		$("tbody input[type='checkbox']").each(function(){
-			if( this.checked == true ){
-				this.parentNode.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML = "<a id='check_result' href='javascript:void(0);' resultPath='"+data+"' onclick='result(event)'>查看结果</a>";
-			}
-		})
-	});
+	if (selection != "") {
+		document.getElementById("start_check").innerHTML = "检测中……";
+		var params = {};
+		params["selection"] = selection;
+		$.post("/startTest",params,function(data,value){
+			document.getElementById("start_check").innerHTML = "检测";
+			$("tbody input[type='checkbox']").each(function(){
+				if( this.checked == true ){
+					this.parentNode.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML = "<a id='check_result' href='javascript:void(0);' resultPath='"+data+"' onclick='result(event)'>查看结果</a>";
+				}
+			})
+		});
+	}else{
+		alert("请先选择要检测的脚本。");
+	}
 }
 function result(evt) {
 	params = {};
