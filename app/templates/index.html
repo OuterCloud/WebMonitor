@@ -100,15 +100,32 @@ function search() {
 		scrollToId(last.id);
 	}
 }
+function searchAndCheck() {
+	var key = $("#searchKey").val();
+	if (key) {
+		$("td").css("background-color","transparent");
+		$("td:contains("+key+")").css("background-color","#B2E0FF");
+		var results = $("td:contains("+key+")");
+		for (var i=0;i<results.length;i++)
+		{
+			results[i].previousSibling.previousSibling.firstChild.checked=true;
+		}
+		var last = results[results.length-1];
+		//alert(last.id);
+		scrollToId(last.id);
+	}
+}
 function scrollToId(id) {
 	//800是滑动动画持续时间
 	$("html,body").animate({scrollTop:$("#" + id).offset().top}, 800);  
 }
 function inputMonitor(evt) {
 	if ($("#searchKey").val()) {
-		$("#searchButton").removeAttr("disabled");
+		$("#searchButton1").removeAttr("disabled");
+		$("#searchButton2").removeAttr("disabled");
 	}else{
-		$("#searchButton").attr("disabled","disabled");
+		$("#searchButton1").attr("disabled","disabled");
+		$("#searchButton2").attr("disabled","disabled");
 	}
 }
 </script>
@@ -130,7 +147,8 @@ function inputMonitor(evt) {
 <div class="input-group col-md-3" style="positon:relative;width:30%;margin:30 auto;">  
 	<input type="text" id="searchKey" oninput="inputMonitor(event)" class="form-control search-query"placeholder="请输入脚本路径关键字" / >  
 	<span class="input-group-btn">  
-		<button id="searchButton" class="btn btn-info btn-search" disabled="disabled" onclick="search()">搜索</button>  
+		<button id="searchButton1" class="btn btn-info btn-search" disabled="disabled" onclick="search()">搜索</button>
+		<button id="searchButton2" class="btn btn-info btn-search" disabled="disabled" onclick="searchAndCheck()">搜索并勾选</button>  
 	</span>  
 </div>
 <!--脚本列表-->
@@ -158,12 +176,4 @@ function inputMonitor(evt) {
 	<tbody id="tbody">
 	</tbody>
 </table>
-<!--页脚html-->
-		<div id="footer" class="container">
-			<nav class="navbar navbar-default navbar-fixed-bottom">
-				<div class="navbar-inner navbar-content-center">
-					<p class="text-muted credit" style="padding: 10px;text-align: center;">Copyright © <strong>OuterCloudBack</strong> All Rights Reserved.</p>
-				</div>
-			</nav>
-		</div>
 {% endblock%}
