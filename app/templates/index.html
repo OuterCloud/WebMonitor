@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <script type="text/javascript">
-window.onload=function(){
+window.onload=function() {
 	geneList();
 }
 /**
@@ -39,10 +39,11 @@ function geneList() {
 			var script_path = data["script_paths"][i];
 			script_name = script_path.split("\\")[script_path.split("\\").length-1];
 			document.getElementById("tbody").innerHTML += "<tr id='item'>\
-				<td id='checkbox'><input type='checkbox'></td>\
-				<td id='script_path'>"+script_path+"</td>\
-				<td><a id='edit' href='javascript:void' scriptPath='"+script_path+"' onclick='edit(event)'>编辑</a></td>\
+				<td id='checkbox_"+i+"'><input type='checkbox'></td>\
+				<td id='script_path_"+i+"'>"+script_path+"</td>\
+				<td><a id='edit_"+i+"' href='javascript:void' scriptPath='"+script_path+"' onclick='edit(event)'>编辑</a></td>\
 				<td>尚未检测</td>\
+				<td style='text-align: center;'>"+i+"</td>\
 			</tr>";
 		}
 	});
@@ -71,7 +72,7 @@ function startTest() {
 		})
 	});
 }
-function result(evt){
+function result(evt) {
 	params = {};
 	var obj = window.event?event.srcElement:evt.target;
 	//alert(obj.getAttribute("resultPath"))
@@ -80,7 +81,7 @@ function result(evt){
 		return true;
 	});
 }
-function edit(evt){
+function edit(evt) {
 	params = {};
 	var obj = window.event?event.srcElement:evt.target;
 	params["script_path"] = obj.getAttribute("scriptPath");
@@ -88,7 +89,30 @@ function edit(evt){
 		return true;
 	});
 }
+function search() {
+	var key = $("#searchKey").val();
+	if (key) {
+		$("td").css("background-color","transparent");
+		$("td:contains("+key+")").css("background-color","#B2E0FF");
+		var results = $("td:contains("+key+")");
+		var last = results[results.length-1];
+		//alert(last.id);
+		scrollToId(last.id);
+	}
+}
+function scrollToId(id) {
+	//800是滑动动画持续时间
+	$("html,body").animate({scrollTop:$("#" + id).offset().top}, 800);  
+}
+function inputMonitor(evt) {
+	if ($("#searchKey").val()) {
+		$("#searchButton").removeAttr("disabled");
+	}else{
+		$("#searchButton").attr("disabled","disabled");
+	}
+}
 </script>
+<!--导航栏-->
 <nav class="navbar navbar-inverse" role="navigation">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -102,10 +126,18 @@ function edit(evt){
 		</div>
 	</div>
 </nav>
+<!--搜索框-->
+<div class="input-group col-md-3" style="positon:relative;width:30%;margin:30 auto;">  
+	<input type="text" id="searchKey" oninput="inputMonitor(event)" class="form-control search-query"placeholder="请输入脚本路径关键字" / >  
+	<span class="input-group-btn">  
+		<button id="searchButton" class="btn btn-info btn-search" disabled="disabled" onclick="search()">搜索</button>  
+	</span>  
+</div>
+<!--脚本列表-->
 <table class="table table-hover">
 	<thead>
 		<tr>
-			<th width="10%">
+			<th width="5%">
 				<!--
 				全选备用方案1：
 				<button id="checkAll" type="button" class="btn btn-primary" data-toggle="button" onclick="checkAll()">全选</button>
@@ -120,6 +152,7 @@ function edit(evt){
 			<th width="30%">脚本路径</th>
 			<th width="30%">编辑脚本</th>
 			<th width="30%">检测结果</th>
+			<th width="5%" style="text-align: center;">索引</th>
 		</tr>
 	</thead>
 	<tbody id="tbody">
