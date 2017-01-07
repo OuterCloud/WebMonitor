@@ -74,7 +74,13 @@ def result():
 def edit():
 	if request.method == "POST":
 		script_path = request.form.get("script_path")
-		os.startfile(script_path)
+		curr_platform = platform.platform()
+		if curr_platform.startswith("Windows"):
+			os.startfile(script_path)
+		elif curr_platform.startswith("Darwin"):
+			subprocess.call(["open", script_path])
+		else:
+			subprocess.call(["xdg-open", script_path])
 	return "OK"
 	
 #Util Methods.
