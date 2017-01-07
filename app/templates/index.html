@@ -132,6 +132,10 @@ function inputMonitor(evt) {
 		$("#searchButton2").attr("disabled","disabled");
 	}
 }
+function help() {
+	//Js调起模态框
+	$("#helpModal").modal("toggle");
+}
 </script>
 <!--导航栏-->
 <nav style="margin:0px;padding:0px;" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -152,6 +156,7 @@ function inputMonitor(evt) {
 						<li><a target="_blank" href="http://www.cnblogs.com/LanTianYou/category/888691.html">Auty系列文档</a></li>
 					</ul>
 				</li>
+				<li><a href="javascript:void(0);" onclick="help()">帮助</a></li>
 			</ul>
 		</div>
 	</div>
@@ -242,6 +247,29 @@ function inputMonitor(evt) {
 			</div>
 			<div class="modal-body">
 				请先选择要检测的脚本！
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					准备工作
+				</h4>
+			</div>
+			<div class="modal-body">
+				1.下载<a href="https://github.com/OuterCloud/WebMonitor.git" target="_blank">WebMonitor</a>到本地；<br>
+				2.下载<a href="https://github.com/OuterCloud/Auty.git" target="_blank">Auty</a>到WebMonitor本地根目录下；<br>
+				3.在Auty的scripts/scripts路径下添加检测脚本。
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
