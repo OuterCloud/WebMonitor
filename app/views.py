@@ -45,28 +45,15 @@ def startTest():
 			time.sleep(1)
 		#print getDirSize(results_folder_path)
 		result_file_path = ""
-		#Get the platform.
-		curr_platform = platform.platform()
-		if curr_platform.startswith("Windows"):
-			for i in os.walk(results_folder_path):
-				for fileName in i[2:3][0]:
-					filePath = os.path.join(i[0],fileName)
-					if(check_if_html(filePath)):
-						result_file_time = filePath.split("\\")[len(filePath.split("\\"))-1].replace(" test_result.html","").replace("_",":")
-						result_file_time = time.mktime(time.strptime(result_file_time, "%Y-%m-%d %H:%M:%S"))
-						#print result_file_time
-						if (start_time < result_file_time):
-							result_file_path = filePath
-		else:
-			for i in os.walk(results_folder_path):
-				for fileName in i[2:3][0]:
-					filePath = os.path.join(i[0],fileName)
-					if(check_if_html(filePath)):
-						result_file_time = filePath.split("/")[len(filePath.split("/"))-1].replace(" test_result.html","").replace("_",":")
-						result_file_time = time.mktime(time.strptime(result_file_time, "%Y-%m-%d %H:%M:%S"))
-						#print result_file_time
-						if (start_time < result_file_time):
-							result_file_path = filePath
+		for i in os.walk(results_folder_path):
+			for fileName in i[2:3][0]:
+				filePath = os.path.join(i[0],fileName)
+				if(check_if_html(filePath)):
+					result_file_time = os.path.basename(filePath).replace(" test_result.html","").replace("_",":")
+					result_file_time = time.mktime(time.strptime(result_file_time, "%Y-%m-%d %H:%M:%S"))
+					#print result_file_time
+					if (start_time < result_file_time):
+						result_file_path = filePath
 		if result_file_path != "":
 			return result_file_path
 		#Analyse the result html.
