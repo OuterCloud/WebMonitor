@@ -136,6 +136,22 @@ function help() {
 	//Js调起模态框
 	$("#helpModal").modal("toggle");
 }
+function grumbleTip(obj) {
+	var id = "#" + obj.id;
+	var tip;
+	if (id == "#img1") {
+		tip = "点击图片前往查看WebMonitor文档";
+	} else if (id == "#img2") {
+		tip = "点击图片前往查看Auty文档";
+	}
+	$(id).grumble({
+		text: tip, 
+		angle: 37, 
+		distance: 100, 
+		showAfter: 500,
+		hideAfter: 2000
+	});
+}
 </script>
 <!--导航栏-->
 <nav style="margin:0px;padding:0px;" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -172,19 +188,19 @@ function help() {
 	<!-- Wrapper for slides -->
 	<div class="carousel-inner" role="listbox">
 		<div class="item active">
-			<img width="50%" style="cursor:pointer" onclick="window.open('http://www.cnblogs.com/LanTianYou/p/6250926.html')" class="center-block" src="{{ url_for('static', filename = 'pictures/project.png') }}" alt="天外归云"/>
+			<img id="img1" width="50%" onmouseover="grumbleTip(this)" style="cursor:pointer" onclick="window.open('http://www.cnblogs.com/LanTianYou/p/6250926.html')" class="center-block" src="{{ url_for('static', filename = 'pictures/project.png') }}" alt="天外归云"/>
 			<div class="carousel-caption">
 				1.下载WebMonitor到本地
 			</div>
 		</div>
 		<div class="item">
-			<img width="50%" style="cursor:pointer" onclick="window.open('http://www.cnblogs.com/LanTianYou/p/5952472.html')" class="center-block" src="{{ url_for('static', filename = 'pictures/Auty.png') }}" alt="天外归云"/>
+			<img id="img2" width="50%" onmouseover="grumbleTip(this)" style="cursor:pointer" onclick="window.open('http://www.cnblogs.com/LanTianYou/p/5952472.html')" class="center-block" src="{{ url_for('static', filename = 'pictures/Auty.png') }}" alt="天外归云"/>
 			<div class="carousel-caption">
 				2.下载Auty到WebMonitor
 			</div>
 		</div>
 		<div class="item">
-			<img width="50%" class="center-block" src="{{ url_for('static', filename = 'pictures/code.png') }}" alt="天外归云"/>
+			<img id="img3" width="50%" class="center-block" src="{{ url_for('static', filename = 'pictures/code.png') }}" alt="天外归云"/>
 			<div class="carousel-caption">
 				3.接口检测用例编写样式
 			</div>

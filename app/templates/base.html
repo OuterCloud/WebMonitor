@@ -2,10 +2,16 @@
 	<head>
 		<meta charset="utf-8">
 		<title>接口检测平台</title>
+		
 		<!--BootStrap-->
 		<link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<!--Grumble-->
+		<link rel="stylesheet" href="{{ url_for('static', filename = 'grumble/css/grumble.min.css') }}">
+		<!--BootStrap-->
 		<script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<!--Grumble-->
+		<script src="{{ url_for('static', filename = 'grumble/js/jquery.grumble.min.js') }}"></script>
 	</head>
 	<body style="padding-bottom: 200px;">
 		{% block content %}{% endblock %}
