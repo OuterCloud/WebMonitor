@@ -98,7 +98,7 @@ def gene_selection(root_path,selection):
 			content.write(sele+"\n")
 
 def getDirSize(dir_path):
-	size = 0L
+	size = 0
 	for root, dirs, files in os.walk(dir_path):
 		size += sum([os.path.getsize(os.path.join(root, name)) for name in files])
 		return size
